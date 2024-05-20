@@ -1,0 +1,51 @@
+ const handleChat = () => {
+   userMessage = chatInput.value.trim();
+   if (!userMessage) return;
+
+   // Append the user's message to the chat box
+   chatBox.appendChild(createChatLi(userMessage, 'outgoing'));
+
+   setTimeout(() => {
+     // Display "Thinking..." while waiting for the response
+     const incomingChatLi = createChatLi("Thinking.....", "incoming");
+     chatBox.appendChild(incomingChatLi);
+     generateResponse(incomingChatLi);
+    }, 600);
+    
+         const apiKey = 'YOUR_OPENAI_API_KEY';
+
+        // Define the API endpoint and request headers
+        const url = 'https://api.openai.com/v1/chat/completions';
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': Bearer ${apiKey}
+        };
+
+        // Define the request payload
+        const data = {
+            model: "gpt-3.5-turbo",
+            messages: [
+     
+                {
+                    role: "user",
+                    content: "Hello!"
+                }
+            ]
+        };
+
+        // Make the POST request using fetch
+        fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response data here
+            console.log(data);
+        })
+        .catch(error => {
+            // Handle any errors here
+            console.error('Error:', error);
+        });
+ }
